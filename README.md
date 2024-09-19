@@ -27,4 +27,4 @@ https://z2586300277.github.io/3d-file-server/
 
 - https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}.jpg
 
-- https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jepg
+- https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg
