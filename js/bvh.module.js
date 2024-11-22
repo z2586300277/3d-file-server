@@ -1,5 +1,5 @@
-import * as THREE from './three/three.module.min';
-import { BufferAttribute, Vector3, Vector2, Plane, Line3, Triangle, Sphere, Matrix4, Box3, BackSide, DoubleSide, FrontSide, Object3D, Mesh, BufferGeometry, Group, LineBasicMaterial, MeshBasicMaterial, REVISION, Ray, RGBAFormat, RGFormat, RedFormat, RGBAIntegerFormat, RGIntegerFormat, RedIntegerFormat, DataTexture, NearestFilter, IntType, UnsignedIntType, FloatType, UnsignedByteType, UnsignedShortType, ByteType, ShortType, Vector4, Matrix3 } from './three/three.module.min';
+import * as THREE from './three/three.module.min.js';
+import { BufferAttribute, Vector3, Vector2, Plane, Line3, Triangle, Sphere, Matrix4, Box3, BackSide, DoubleSide, FrontSide, Object3D, Mesh, BufferGeometry, Group, LineBasicMaterial, MeshBasicMaterial, REVISION, Ray, RGBAFormat, RGFormat, RedFormat, RGBAIntegerFormat, RGIntegerFormat, RedIntegerFormat, DataTexture, NearestFilter, IntType, UnsignedIntType, FloatType, UnsignedByteType, UnsignedShortType, ByteType, ShortType, Vector4, Matrix3 } from './three/three.module.min.js';
 
 // Split strategy constants
 const CENTER = 0;
