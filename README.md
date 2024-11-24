@@ -7,11 +7,13 @@ https://z2586300277.github.io/3d-file-server/
 
 - https://z2586300277.github.io/3d-file-server/files/model/Fox.glb
 
+- https://z2586300277.github.io/3d-file-server/models/glb/computer.glb
+
 - https://z2586300277.github.io/3d-file-server/models/fbx/shanghai.FBX
 
 - https://z2586300277.github.io/3d-file-server/files/hdr/1k.hdr
 
-- https://z2586300277.github.io/3d-file-server/files/sky/skyBox0/[1-6].png
+- https://z2586300277.github.io/3d-file-server/files/sky/skyBox0/1.png
 
 - https://z2586300277.github.io/3d-file-server/files/video/video.mp4
 
