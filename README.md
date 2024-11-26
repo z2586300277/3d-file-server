@@ -4,6 +4,7 @@
 # 访问服务地址
 https://z2586300277.github.io/3d-file-server/
 
+- https://z2586300277.github.io/3d-file-server/images/channels/n.png
 
 - https://z2586300277.github.io/3d-file-server/files/model/Fox.glb
 
