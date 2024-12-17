@@ -31,3 +31,16 @@ https://z2586300277.github.io/3d-file-server/
 - https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}.jpg
 
 - https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg
+
+https://z2586300277.github.io/3d-file-server/models/glb/build.glb
+https://z2586300277.github.io/3d-file-server/models/glb/computer.glb
+https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb
+https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb
+https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb
+https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb
+https://z2586300277.github.io/3d-file-server/models/glb/leida.glb
+https://z2586300277.github.io/3d-file-server/models/glb/plane.glb
+https://z2586300277.github.io/3d-file-server/models/glb/robot.glb
+https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb
+https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb
+https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb
