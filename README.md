@@ -4,6 +4,8 @@
 # 访问服务地址
 https://z2586300277.github.io/3d-file-server/ 
 
+- https://z2586300277.github.io/3d-file-server/link.html 
+
 - https://z2586300277.github.io/3d-file-server/3dtiles/house/tileset.json 3dtiles 房子
 
 - https://z2586300277.github.io/3d-file-server/images/channels/n.png  贴图

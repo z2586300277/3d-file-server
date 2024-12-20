@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D File Server</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        button {
+            border: none;
+            color: 007BFF;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>文件名称</th>
+                <th>链接</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody id="file-list"></tbody>
+    </table>
+
+    <script>
+        const files = [
+            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/house/tileset.json", name: "3dtiles 房子" },
+            { url: "https://z2586300277.github.io/3d-file-server/images/channels/n.png", name: "贴图" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/model/Fox.glb", name: "狐狸" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/computer.glb", name: "电脑" },
+            { url: "https://z2586300277.github.io/3d-file-server/examples/coffeeMug/coffeeMug.glb", name: "咖啡模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/fbx/shanghai.FBX", name: "城市白膜" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/hdr/1k.hdr", name: "hdr 贴图" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/sky/skyBox0/1.png", name: "天空盒" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/video/video.mp4", name: "视频" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/audio/Avicii-WeBurn.mp3", name: "音乐" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/font.json", name: "字体 json 英文" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/font_zn.json", name: "字体 json 中文" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/guangdong.json", name: "广东 geo json" },
+            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/test/tileset.json", name: "测试瓦片模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}.jpg", name: "离线地图资源" },
+            { url: "https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg", name: "地球贴图" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/build.glb", name: "建筑模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb", name: "导弹模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb", name: "飞机模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb", name: "地面模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb", name: "工人模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/leida.glb", name: "雷达模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/plane.glb", name: "飞机模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/robot.glb", name: "机器人模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb", name: "挖掘机模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb", name: "展馆模型" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb", name: "追踪器模型" }
+        ];
+
+        const fileList = document.getElementById('file-list');
+
+        files.forEach(file => {
+            const row = document.createElement('tr');
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = file.name;
+
+            const linkCell = document.createElement('td');
+            const link = document.createElement('a');
+            link.href = file.url;
+            link.textContent = file.url;
+            link.target = '_blank';
+            linkCell.appendChild(link);
+
+            const actionCell = document.createElement('td');
+            const copyButton = document.createElement('button');
+            copyButton.textContent = '复制链接';
+            copyButton.onclick = () => {
+                navigator.clipboard.writeText(file.url).then(() => {
+                    // 弹出两秒后消失
+                    const tip = document.createElement('div');
+                    //设置样式
+                    tip.style.cssText = `
+                        position: fixed;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                        padding: 10px 20px;
+                        background-color: rgba(0, 0, 0, 0.8);
+                        color: #fff;
+                        border-radius: 4px;
+                        font-size: 14px;
+                    `
+                    tip.style.zIndex = 9999;    
+
+                    tip.textContent = '已复制';
+                    document.body.appendChild(tip);
+                    setTimeout(() => {
+                        document.body.removeChild(tip);
+                    }, 400);
+                });
+            };
+            actionCell.appendChild(copyButton);
+
+            row.appendChild(nameCell);
+            row.appendChild(linkCell);
+            row.appendChild(actionCell);
+            fileList.appendChild(row);
+        });
+    </script>
+</body>
+</html>
