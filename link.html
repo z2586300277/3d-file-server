@@ -48,7 +48,7 @@
             <tr>
                 <th>文件名称</th>
                 <th>链接</th>
-                <th>操作</th>
+                <th>地址</th>
             </tr>
         </thead>
         <tbody id="file-list"></tbody>
@@ -131,8 +131,9 @@
             actionCell.appendChild(copyButton);
 
             row.appendChild(nameCell);
-            row.appendChild(linkCell);
             row.appendChild(actionCell);
+            row.appendChild(linkCell);
+            
             fileList.appendChild(row);
         });
     </script>
