@@ -1,10 +1,10 @@
 # 3d-file-server
 用于three-cesium-examples存储文件的服务器
 
+- 页面访问 https://z2586300277.github.io/3d-file-server/link.html 
+
 # 访问服务地址
 https://z2586300277.github.io/3d-file-server/ 
-
-- https://z2586300277.github.io/3d-file-server/link.html 
 
 - https://z2586300277.github.io/3d-file-server/3dtiles/house/tileset.json 3dtiles 房子
 
@@ -38,15 +38,15 @@ https://z2586300277.github.io/3d-file-server/
 
 - https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg 地球贴图
 
-https://z2586300277.github.io/3d-file-server/models/glb/build.glb
-https://z2586300277.github.io/3d-file-server/models/glb/computer.glb
-https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb
-https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb
-https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb
-https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb
-https://z2586300277.github.io/3d-file-server/models/glb/leida.glb
-https://z2586300277.github.io/3d-file-server/models/glb/plane.glb
-https://z2586300277.github.io/3d-file-server/models/glb/robot.glb
-https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb
-https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb
-https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/build.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/computer.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/leida.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/plane.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/robot.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb
+- https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb
