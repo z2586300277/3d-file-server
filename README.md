@@ -34,6 +34,8 @@ https://z2586300277.github.io/3d-file-server/
 
 - https://z2586300277.github.io/3d-file-server/3dtiles/test/tileset.json 测试瓦片模型
 
+- https://z2586300277.github.io/3d-file-server/3dtiles/cityWhiteModel/tileset.json 部分城市白膜
+
 - https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}.jpg 离线地图资源
 
 - https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg 地球贴图
