@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.118.1
+ * Version 1.130
  *
  * Copyright 2011-2022 Cesium Contributors
  *
@@ -23,4 +23,19 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-self.onmessage=function(a){let s=a.data.array,e=self.webkitPostMessage||self.postMessage;try{e({array:s},[s.buffer])}catch{e({})}};
+
+// packages/engine/Source/Workers/transferTypedArrayTest.js
+self.onmessage = function(event) {
+  const array = event.data.array;
+  const postMessage = self.webkitPostMessage || self.postMessage;
+  try {
+    postMessage(
+      {
+        array
+      },
+      [array.buffer]
+    );
+  } catch (e) {
+    postMessage({});
+  }
+};

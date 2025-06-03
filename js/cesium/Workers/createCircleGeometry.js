@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.118.1
+ * Version 1.130
  *
  * Copyright 2011-2022 Cesium Contributors
  *
@@ -23,4 +23,175 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-import{a as s}from"./chunk-QBLZNHRV.js";import"./chunk-Y5ISG54S.js";import"./chunk-CRFMECNE.js";import"./chunk-7JCIFY66.js";import"./chunk-ED2EM7ZX.js";import"./chunk-YZP3DYN3.js";import"./chunk-WLRVP2UA.js";import{a as d}from"./chunk-DUVNED7U.js";import"./chunk-PT2EMSIG.js";import"./chunk-REUYHR24.js";import"./chunk-RQXB4B4V.js";import"./chunk-MPVEZNKB.js";import"./chunk-FATK2EQ2.js";import"./chunk-3FEM743H.js";import"./chunk-CMXCDAKR.js";import"./chunk-77ESX6BV.js";import{a as l,d as a}from"./chunk-LJCGAQ64.js";import"./chunk-JFG572S7.js";import"./chunk-JZYZ7RT4.js";import"./chunk-IRDBGNMC.js";import{a as c}from"./chunk-42NIXFVW.js";import{b as p}from"./chunk-5YVCOCPP.js";import{e as m}from"./chunk-U73D6PDD.js";function n(e){e=c(e,c.EMPTY_OBJECT);let r=e.radius;p.typeOf.number("radius",r);let o={center:e.center,semiMajorAxis:r,semiMinorAxis:r,ellipsoid:e.ellipsoid,height:e.height,extrudedHeight:e.extrudedHeight,granularity:e.granularity,vertexFormat:e.vertexFormat,stRotation:e.stRotation,shadowVolume:e.shadowVolume};this._ellipseGeometry=new s(o),this._workerName="createCircleGeometry"}n.packedLength=s.packedLength;n.pack=function(e,r,o){return p.typeOf.object("value",e),s.pack(e._ellipseGeometry,r,o)};var x=new s({center:new l,semiMajorAxis:1,semiMinorAxis:1}),t={center:new l,radius:void 0,ellipsoid:a.clone(a.UNIT_SPHERE),height:void 0,extrudedHeight:void 0,granularity:void 0,vertexFormat:new d,stRotation:void 0,semiMajorAxis:void 0,semiMinorAxis:void 0,shadowVolume:void 0};n.unpack=function(e,r,o){let i=s.unpack(e,r,x);return t.center=l.clone(i._center,t.center),t.ellipsoid=a.clone(i._ellipsoid,t.ellipsoid),t.height=i._height,t.extrudedHeight=i._extrudedHeight,t.granularity=i._granularity,t.vertexFormat=d.clone(i._vertexFormat,t.vertexFormat),t.stRotation=i._stRotation,t.shadowVolume=i._shadowVolume,m(o)?(t.semiMajorAxis=i._semiMajorAxis,t.semiMinorAxis=i._semiMinorAxis,o._ellipseGeometry=new s(t),o):(t.radius=i._semiMajorAxis,new n(t))};n.createGeometry=function(e){return s.createGeometry(e._ellipseGeometry)};n.createShadowVolume=function(e,r,o){let i=e._ellipseGeometry._granularity,u=e._ellipseGeometry._ellipsoid,h=r(i,u),f=o(i,u);return new n({center:e._ellipseGeometry._center,radius:e._ellipseGeometry._semiMajorAxis,ellipsoid:u,stRotation:e._ellipseGeometry._stRotation,granularity:i,extrudedHeight:h,height:f,vertexFormat:d.POSITION_ONLY,shadowVolume:!0})};Object.defineProperties(n.prototype,{rectangle:{get:function(){return this._ellipseGeometry.rectangle}},textureCoordinateRotationPoints:{get:function(){return this._ellipseGeometry.textureCoordinateRotationPoints}}});var _=n;function g(e,r){return m(r)&&(e=_.unpack(e,r)),e._ellipseGeometry._center=l.clone(e._ellipseGeometry._center),e._ellipseGeometry._ellipsoid=a.clone(e._ellipseGeometry._ellipsoid),_.createGeometry(e)}var E=g;export{E as default};
+import {
+  EllipseGeometry_default
+} from "./chunk-3CEWSDD6.js";
+import "./chunk-F33UPGX4.js";
+import "./chunk-UHGHLHXX.js";
+import "./chunk-TF2FIAJH.js";
+import "./chunk-I25UGRCO.js";
+import "./chunk-PIL4KYPY.js";
+import "./chunk-OQEJS5DO.js";
+import {
+  VertexFormat_default
+} from "./chunk-HX7BP5BX.js";
+import "./chunk-IUPKE27P.js";
+import "./chunk-QVWQ3UFZ.js";
+import "./chunk-N53AHUTA.js";
+import "./chunk-C3BZAHZZ.js";
+import "./chunk-4OZBDEVZ.js";
+import "./chunk-KSUW52CB.js";
+import "./chunk-EEPIX3G6.js";
+import "./chunk-6MZLBHE3.js";
+import {
+  Cartesian3_default,
+  Ellipsoid_default,
+  Frozen_default
+} from "./chunk-ONGM4NH7.js";
+import "./chunk-D3QW2ZBO.js";
+import "./chunk-XW26DLRH.js";
+import "./chunk-LVZNZ4UK.js";
+import {
+  Check_default
+} from "./chunk-77GQGTAP.js";
+import {
+  defined_default
+} from "./chunk-WCY5IZWR.js";
+
+// packages/engine/Source/Core/CircleGeometry.js
+function CircleGeometry(options) {
+  options = options ?? Frozen_default.EMPTY_OBJECT;
+  const radius = options.radius;
+  Check_default.typeOf.number("radius", radius);
+  const ellipseGeometryOptions = {
+    center: options.center,
+    semiMajorAxis: radius,
+    semiMinorAxis: radius,
+    ellipsoid: options.ellipsoid,
+    height: options.height,
+    extrudedHeight: options.extrudedHeight,
+    granularity: options.granularity,
+    vertexFormat: options.vertexFormat,
+    stRotation: options.stRotation,
+    shadowVolume: options.shadowVolume
+  };
+  this._ellipseGeometry = new EllipseGeometry_default(ellipseGeometryOptions);
+  this._workerName = "createCircleGeometry";
+}
+CircleGeometry.packedLength = EllipseGeometry_default.packedLength;
+CircleGeometry.pack = function(value, array, startingIndex) {
+  Check_default.typeOf.object("value", value);
+  return EllipseGeometry_default.pack(value._ellipseGeometry, array, startingIndex);
+};
+var scratchEllipseGeometry = new EllipseGeometry_default({
+  center: new Cartesian3_default(),
+  semiMajorAxis: 1,
+  semiMinorAxis: 1
+});
+var scratchOptions = {
+  center: new Cartesian3_default(),
+  radius: void 0,
+  ellipsoid: Ellipsoid_default.clone(Ellipsoid_default.default),
+  height: void 0,
+  extrudedHeight: void 0,
+  granularity: void 0,
+  vertexFormat: new VertexFormat_default(),
+  stRotation: void 0,
+  semiMajorAxis: void 0,
+  semiMinorAxis: void 0,
+  shadowVolume: void 0
+};
+CircleGeometry.unpack = function(array, startingIndex, result) {
+  const ellipseGeometry = EllipseGeometry_default.unpack(
+    array,
+    startingIndex,
+    scratchEllipseGeometry
+  );
+  scratchOptions.center = Cartesian3_default.clone(
+    ellipseGeometry._center,
+    scratchOptions.center
+  );
+  scratchOptions.ellipsoid = Ellipsoid_default.clone(
+    ellipseGeometry._ellipsoid,
+    scratchOptions.ellipsoid
+  );
+  scratchOptions.ellipsoid = Ellipsoid_default.clone(
+    ellipseGeometry._ellipsoid,
+    scratchEllipseGeometry._ellipsoid
+  );
+  scratchOptions.height = ellipseGeometry._height;
+  scratchOptions.extrudedHeight = ellipseGeometry._extrudedHeight;
+  scratchOptions.granularity = ellipseGeometry._granularity;
+  scratchOptions.vertexFormat = VertexFormat_default.clone(
+    ellipseGeometry._vertexFormat,
+    scratchOptions.vertexFormat
+  );
+  scratchOptions.stRotation = ellipseGeometry._stRotation;
+  scratchOptions.shadowVolume = ellipseGeometry._shadowVolume;
+  if (!defined_default(result)) {
+    scratchOptions.radius = ellipseGeometry._semiMajorAxis;
+    return new CircleGeometry(scratchOptions);
+  }
+  scratchOptions.semiMajorAxis = ellipseGeometry._semiMajorAxis;
+  scratchOptions.semiMinorAxis = ellipseGeometry._semiMinorAxis;
+  result._ellipseGeometry = new EllipseGeometry_default(scratchOptions);
+  return result;
+};
+CircleGeometry.createGeometry = function(circleGeometry) {
+  return EllipseGeometry_default.createGeometry(circleGeometry._ellipseGeometry);
+};
+CircleGeometry.createShadowVolume = function(circleGeometry, minHeightFunc, maxHeightFunc) {
+  const granularity = circleGeometry._ellipseGeometry._granularity;
+  const ellipsoid = circleGeometry._ellipseGeometry._ellipsoid;
+  const minHeight = minHeightFunc(granularity, ellipsoid);
+  const maxHeight = maxHeightFunc(granularity, ellipsoid);
+  return new CircleGeometry({
+    center: circleGeometry._ellipseGeometry._center,
+    radius: circleGeometry._ellipseGeometry._semiMajorAxis,
+    ellipsoid,
+    stRotation: circleGeometry._ellipseGeometry._stRotation,
+    granularity,
+    extrudedHeight: minHeight,
+    height: maxHeight,
+    vertexFormat: VertexFormat_default.POSITION_ONLY,
+    shadowVolume: true
+  });
+};
+Object.defineProperties(CircleGeometry.prototype, {
+  /**
+   * @private
+   */
+  rectangle: {
+    get: function() {
+      return this._ellipseGeometry.rectangle;
+    }
+  },
+  /**
+   * For remapping texture coordinates when rendering CircleGeometries as GroundPrimitives.
+   * @private
+   */
+  textureCoordinateRotationPoints: {
+    get: function() {
+      return this._ellipseGeometry.textureCoordinateRotationPoints;
+    }
+  }
+});
+var CircleGeometry_default = CircleGeometry;
+
+// packages/engine/Source/Workers/createCircleGeometry.js
+function createCircleGeometry(circleGeometry, offset) {
+  if (defined_default(offset)) {
+    circleGeometry = CircleGeometry_default.unpack(circleGeometry, offset);
+  }
+  circleGeometry._ellipseGeometry._center = Cartesian3_default.clone(
+    circleGeometry._ellipseGeometry._center
+  );
+  circleGeometry._ellipseGeometry._ellipsoid = Ellipsoid_default.clone(
+    circleGeometry._ellipseGeometry._ellipsoid
+  );
+  return CircleGeometry_default.createGeometry(circleGeometry);
+}
+var createCircleGeometry_default = createCircleGeometry;
+export {
+  createCircleGeometry_default as default
+};

@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.118.1
+ * Version 1.130
  *
  * Copyright 2011-2022 Cesium Contributors
  *
@@ -23,4 +23,91 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-import{a as t}from"./chunk-TRGIYWHT.js";import"./chunk-WLRVP2UA.js";import"./chunk-RQXB4B4V.js";import"./chunk-MPVEZNKB.js";import"./chunk-FATK2EQ2.js";import"./chunk-3FEM743H.js";import"./chunk-CMXCDAKR.js";import"./chunk-77ESX6BV.js";import{a as d}from"./chunk-LJCGAQ64.js";import"./chunk-JFG572S7.js";import"./chunk-JZYZ7RT4.js";import"./chunk-IRDBGNMC.js";import{a as l}from"./chunk-42NIXFVW.js";import{b as u}from"./chunk-5YVCOCPP.js";import{e as a}from"./chunk-U73D6PDD.js";function s(i){let e=l(i.radius,1),r={radii:new d(e,e,e),stackPartitions:i.stackPartitions,slicePartitions:i.slicePartitions,subdivisions:i.subdivisions};this._ellipsoidGeometry=new t(r),this._workerName="createSphereOutlineGeometry"}s.packedLength=t.packedLength;s.pack=function(i,e,o){return u.typeOf.object("value",i),t.pack(i._ellipsoidGeometry,e,o)};var m=new t,n={radius:void 0,radii:new d,stackPartitions:void 0,slicePartitions:void 0,subdivisions:void 0};s.unpack=function(i,e,o){let r=t.unpack(i,e,m);return n.stackPartitions=r._stackPartitions,n.slicePartitions=r._slicePartitions,n.subdivisions=r._subdivisions,a(o)?(d.clone(r._radii,n.radii),o._ellipsoidGeometry=new t(n),o):(n.radius=r._radii.x,new s(n))};s.createGeometry=function(i){return t.createGeometry(i._ellipsoidGeometry)};var c=s;function p(i,e){return a(e)&&(i=c.unpack(i,e)),c.createGeometry(i)}var w=p;export{w as default};
+import {
+  EllipsoidOutlineGeometry_default
+} from "./chunk-OWDSGKAJ.js";
+import "./chunk-OQEJS5DO.js";
+import "./chunk-N53AHUTA.js";
+import "./chunk-C3BZAHZZ.js";
+import "./chunk-4OZBDEVZ.js";
+import "./chunk-KSUW52CB.js";
+import "./chunk-EEPIX3G6.js";
+import "./chunk-6MZLBHE3.js";
+import {
+  Cartesian3_default
+} from "./chunk-ONGM4NH7.js";
+import "./chunk-D3QW2ZBO.js";
+import "./chunk-XW26DLRH.js";
+import "./chunk-LVZNZ4UK.js";
+import {
+  Check_default
+} from "./chunk-77GQGTAP.js";
+import {
+  defined_default
+} from "./chunk-WCY5IZWR.js";
+
+// packages/engine/Source/Core/SphereOutlineGeometry.js
+function SphereOutlineGeometry(options) {
+  const radius = options.radius ?? 1;
+  const radii = new Cartesian3_default(radius, radius, radius);
+  const ellipsoidOptions = {
+    radii,
+    stackPartitions: options.stackPartitions,
+    slicePartitions: options.slicePartitions,
+    subdivisions: options.subdivisions
+  };
+  this._ellipsoidGeometry = new EllipsoidOutlineGeometry_default(ellipsoidOptions);
+  this._workerName = "createSphereOutlineGeometry";
+}
+SphereOutlineGeometry.packedLength = EllipsoidOutlineGeometry_default.packedLength;
+SphereOutlineGeometry.pack = function(value, array, startingIndex) {
+  Check_default.typeOf.object("value", value);
+  return EllipsoidOutlineGeometry_default.pack(
+    value._ellipsoidGeometry,
+    array,
+    startingIndex
+  );
+};
+var scratchEllipsoidGeometry = new EllipsoidOutlineGeometry_default();
+var scratchOptions = {
+  radius: void 0,
+  radii: new Cartesian3_default(),
+  stackPartitions: void 0,
+  slicePartitions: void 0,
+  subdivisions: void 0
+};
+SphereOutlineGeometry.unpack = function(array, startingIndex, result) {
+  const ellipsoidGeometry = EllipsoidOutlineGeometry_default.unpack(
+    array,
+    startingIndex,
+    scratchEllipsoidGeometry
+  );
+  scratchOptions.stackPartitions = ellipsoidGeometry._stackPartitions;
+  scratchOptions.slicePartitions = ellipsoidGeometry._slicePartitions;
+  scratchOptions.subdivisions = ellipsoidGeometry._subdivisions;
+  if (!defined_default(result)) {
+    scratchOptions.radius = ellipsoidGeometry._radii.x;
+    return new SphereOutlineGeometry(scratchOptions);
+  }
+  Cartesian3_default.clone(ellipsoidGeometry._radii, scratchOptions.radii);
+  result._ellipsoidGeometry = new EllipsoidOutlineGeometry_default(scratchOptions);
+  return result;
+};
+SphereOutlineGeometry.createGeometry = function(sphereGeometry) {
+  return EllipsoidOutlineGeometry_default.createGeometry(
+    sphereGeometry._ellipsoidGeometry
+  );
+};
+var SphereOutlineGeometry_default = SphereOutlineGeometry;
+
+// packages/engine/Source/Workers/createSphereOutlineGeometry.js
+function createSphereOutlineGeometry(sphereGeometry, offset) {
+  if (defined_default(offset)) {
+    sphereGeometry = SphereOutlineGeometry_default.unpack(sphereGeometry, offset);
+  }
+  return SphereOutlineGeometry_default.createGeometry(sphereGeometry);
+}
+var createSphereOutlineGeometry_default = createSphereOutlineGeometry;
+export {
+  createSphereOutlineGeometry_default as default
+};

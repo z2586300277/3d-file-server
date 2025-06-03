@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.118.1
+ * Version 1.130
  *
  * Copyright 2011-2022 Cesium Contributors
  *
@@ -23,4 +23,39 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-import{a as i}from"./chunk-JE5KQ6H6.js";import"./chunk-Y5ISG54S.js";import"./chunk-WLRVP2UA.js";import"./chunk-RQXB4B4V.js";import"./chunk-MPVEZNKB.js";import"./chunk-FATK2EQ2.js";import"./chunk-3FEM743H.js";import"./chunk-CMXCDAKR.js";import"./chunk-77ESX6BV.js";import{a as t,d as c}from"./chunk-LJCGAQ64.js";import"./chunk-JFG572S7.js";import"./chunk-JZYZ7RT4.js";import"./chunk-IRDBGNMC.js";import"./chunk-42NIXFVW.js";import"./chunk-5YVCOCPP.js";import{e as o}from"./chunk-U73D6PDD.js";function a(r,n){return o(n)&&(r=i.unpack(r,n)),r._center=t.clone(r._center),r._ellipsoid=c.clone(r._ellipsoid),i.createGeometry(r)}var p=a;export{p as default};
+import {
+  EllipseOutlineGeometry_default
+} from "./chunk-5C3XP3UP.js";
+import "./chunk-F33UPGX4.js";
+import "./chunk-OQEJS5DO.js";
+import "./chunk-N53AHUTA.js";
+import "./chunk-C3BZAHZZ.js";
+import "./chunk-4OZBDEVZ.js";
+import "./chunk-KSUW52CB.js";
+import "./chunk-EEPIX3G6.js";
+import "./chunk-6MZLBHE3.js";
+import {
+  Cartesian3_default,
+  Ellipsoid_default
+} from "./chunk-ONGM4NH7.js";
+import "./chunk-D3QW2ZBO.js";
+import "./chunk-XW26DLRH.js";
+import "./chunk-LVZNZ4UK.js";
+import "./chunk-77GQGTAP.js";
+import {
+  defined_default
+} from "./chunk-WCY5IZWR.js";
+
+// packages/engine/Source/Workers/createEllipseOutlineGeometry.js
+function createEllipseOutlineGeometry(ellipseGeometry, offset) {
+  if (defined_default(offset)) {
+    ellipseGeometry = EllipseOutlineGeometry_default.unpack(ellipseGeometry, offset);
+  }
+  ellipseGeometry._center = Cartesian3_default.clone(ellipseGeometry._center);
+  ellipseGeometry._ellipsoid = Ellipsoid_default.clone(ellipseGeometry._ellipsoid);
+  return EllipseOutlineGeometry_default.createGeometry(ellipseGeometry);
+}
+var createEllipseOutlineGeometry_default = createEllipseOutlineGeometry;
+export {
+  createEllipseOutlineGeometry_default as default
+};

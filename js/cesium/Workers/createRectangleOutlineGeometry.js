@@ -1,7 +1,7 @@
 /**
  * @license
  * Cesium - https://github.com/CesiumGS/cesium
- * Version 1.118.1
+ * Version 1.130
  *
  * Copyright 2011-2022 Cesium Contributors
  *
@@ -23,4 +23,450 @@
  * See https://github.com/CesiumGS/cesium/blob/main/LICENSE.md for full licensing details.
  */
 
-import{a as C}from"./chunk-FPY4GPIL.js";import{a as v}from"./chunk-WLRVP2UA.js";import{b as z}from"./chunk-LKPDAB55.js";import"./chunk-OSVMDAN4.js";import{a as O}from"./chunk-RQXB4B4V.js";import{a as Y}from"./chunk-MPVEZNKB.js";import{b as B,c as q,d as y}from"./chunk-FATK2EQ2.js";import{d as R}from"./chunk-3FEM743H.js";import{h as b}from"./chunk-CMXCDAKR.js";import{a as T}from"./chunk-77ESX6BV.js";import{a as U,b as M,d as w}from"./chunk-LJCGAQ64.js";import{a as P}from"./chunk-JFG572S7.js";import"./chunk-JZYZ7RT4.js";import"./chunk-IRDBGNMC.js";import{a as E}from"./chunk-42NIXFVW.js";import{a as N}from"./chunk-5YVCOCPP.js";import{e as S}from"./chunk-U73D6PDD.js";var W=new R,j=new R,K=new U,Q=new b;function F(t,e){let i=t._ellipsoid,m=e.height,s=e.width,h=e.northCap,p=e.southCap,_=m,A=2,o=0,g=4;h&&(A-=1,_-=1,o+=1,g-=2),p&&(A-=1,_-=1,o+=1,g-=2),o+=A*s+2*_-g;let n=new Float64Array(o*3),l=0,f=0,a,r=K;if(h)C.computePosition(e,i,!1,f,0,r),n[l++]=r.x,n[l++]=r.y,n[l++]=r.z;else for(a=0;a<s;a++)C.computePosition(e,i,!1,f,a,r),n[l++]=r.x,n[l++]=r.y,n[l++]=r.z;for(a=s-1,f=1;f<m;f++)C.computePosition(e,i,!1,f,a,r),n[l++]=r.x,n[l++]=r.y,n[l++]=r.z;if(f=m-1,!p)for(a=s-2;a>=0;a--)C.computePosition(e,i,!1,f,a,r),n[l++]=r.x,n[l++]=r.y,n[l++]=r.z;for(a=0,f=m-2;f>0;f--)C.computePosition(e,i,!1,f,a,r),n[l++]=r.x,n[l++]=r.y,n[l++]=r.z;let u=n.length/3*2,c=O.createTypedArray(n.length/3,u),H=0;for(let D=0;D<n.length/3-1;D++)c[H++]=D,c[H++]=D+1;c[H++]=n.length/3-1,c[H++]=0;let d=new q({attributes:new Y,primitiveType:B.LINES});return d.attributes.position=new y({componentDatatype:T.DOUBLE,componentsPerAttribute:3,values:n}),d.indices=c,d}function X(t,e){let i=t._surfaceHeight,m=t._extrudedHeight,s=t._ellipsoid,h=F(t,e),p=e.height,_=e.width,A=z.scaleToGeodeticHeight(h.attributes.position.values,i,s,!1),o=A.length,g=new Float64Array(o*2);g.set(A);let n=z.scaleToGeodeticHeight(h.attributes.position.values,m,s);g.set(n,o),h.attributes.position.values=g;let l=e.northCap,f=e.southCap,a=4;l&&(a-=1),f&&(a-=1);let r=(g.length/3+a)*2,u=O.createTypedArray(g.length/3,r);o=g.length/6;let c=0;for(let d=0;d<o-1;d++)u[c++]=d,u[c++]=d+1,u[c++]=d+o,u[c++]=d+o+1;u[c++]=o-1,u[c++]=0,u[c++]=o+o-1,u[c++]=o,u[c++]=0,u[c++]=o;let H;if(l)H=p-1;else{let d=_-1;u[c++]=d,u[c++]=d+o,H=_+p-2}if(u[c++]=H,u[c++]=H+o,!f){let d=_+H-1;u[c++]=d,u[c]=d+o}return h.indices=u,h}function L(t){t=E(t,E.EMPTY_OBJECT);let e=t.rectangle,i=E(t.granularity,P.RADIANS_PER_DEGREE),m=E(t.ellipsoid,w.WGS84),s=E(t.rotation,0);if(!S(e))throw new N("rectangle is required.");if(b.validate(e),e.north<e.south)throw new N("options.rectangle.north must be greater than options.rectangle.south");let h=E(t.height,0),p=E(t.extrudedHeight,h);this._rectangle=b.clone(e),this._granularity=i,this._ellipsoid=m,this._surfaceHeight=Math.max(h,p),this._rotation=s,this._extrudedHeight=Math.min(h,p),this._offsetAttribute=t.offsetAttribute,this._workerName="createRectangleOutlineGeometry"}L.packedLength=b.packedLength+w.packedLength+5;L.pack=function(t,e,i){if(!S(t))throw new N("value is required");if(!S(e))throw new N("array is required");return i=E(i,0),b.pack(t._rectangle,e,i),i+=b.packedLength,w.pack(t._ellipsoid,e,i),i+=w.packedLength,e[i++]=t._granularity,e[i++]=t._surfaceHeight,e[i++]=t._rotation,e[i++]=t._extrudedHeight,e[i]=E(t._offsetAttribute,-1),e};var V=new b,J=w.clone(w.UNIT_SPHERE),k={rectangle:V,ellipsoid:J,granularity:void 0,height:void 0,rotation:void 0,extrudedHeight:void 0,offsetAttribute:void 0};L.unpack=function(t,e,i){if(!S(t))throw new N("array is required");e=E(e,0);let m=b.unpack(t,e,V);e+=b.packedLength;let s=w.unpack(t,e,J);e+=w.packedLength;let h=t[e++],p=t[e++],_=t[e++],A=t[e++],o=t[e];return S(i)?(i._rectangle=b.clone(m,i._rectangle),i._ellipsoid=w.clone(s,i._ellipsoid),i._surfaceHeight=p,i._rotation=_,i._extrudedHeight=A,i._offsetAttribute=o===-1?void 0:o,i):(k.granularity=h,k.height=p,k.rotation=_,k.extrudedHeight=A,k.offsetAttribute=o===-1?void 0:o,new L(k))};var Z=new M;L.createGeometry=function(t){let e=t._rectangle,i=t._ellipsoid,m=C.computeOptions(e,t._granularity,t._rotation,0,Q,Z),s,h;if(P.equalsEpsilon(e.north,e.south,P.EPSILON10)||P.equalsEpsilon(e.east,e.west,P.EPSILON10))return;let p=t._surfaceHeight,_=t._extrudedHeight,A=!P.equalsEpsilon(p,_,0,P.EPSILON2),o;if(A){if(s=X(t,m),S(t._offsetAttribute)){let l=s.attributes.position.values.length/3,f=new Uint8Array(l);t._offsetAttribute===v.TOP?f=f.fill(1,0,l/2):(o=t._offsetAttribute===v.NONE?0:1,f=f.fill(o)),s.attributes.applyOffset=new y({componentDatatype:T.UNSIGNED_BYTE,componentsPerAttribute:1,values:f})}let g=R.fromRectangle3D(e,i,p,j),n=R.fromRectangle3D(e,i,_,W);h=R.union(g,n)}else{if(s=F(t,m),s.attributes.position.values=z.scaleToGeodeticHeight(s.attributes.position.values,p,i,!1),S(t._offsetAttribute)){let g=s.attributes.position.values.length;o=t._offsetAttribute===v.NONE?0:1;let n=new Uint8Array(g/3).fill(o);s.attributes.applyOffset=new y({componentDatatype:T.UNSIGNED_BYTE,componentsPerAttribute:1,values:n})}h=R.fromRectangle3D(e,i,p)}return new q({attributes:s.attributes,indices:s.indices,primitiveType:B.LINES,boundingSphere:h,offsetAttribute:t._offsetAttribute})};var x=L;function $(t,e){return S(e)&&(t=x.unpack(t,e)),t._ellipsoid=w.clone(t._ellipsoid),t._rectangle=b.clone(t._rectangle),x.createGeometry(t)}var Et=$;export{Et as default};
+import {
+  RectangleGeometryLibrary_default
+} from "./chunk-SCUUXSN7.js";
+import {
+  GeometryOffsetAttribute_default
+} from "./chunk-OQEJS5DO.js";
+import {
+  PolygonPipeline_default
+} from "./chunk-6KFH6YJ7.js";
+import "./chunk-SZGPDJWJ.js";
+import {
+  IndexDatatype_default
+} from "./chunk-N53AHUTA.js";
+import {
+  GeometryAttributes_default
+} from "./chunk-C3BZAHZZ.js";
+import {
+  GeometryAttribute_default,
+  Geometry_default,
+  PrimitiveType_default
+} from "./chunk-4OZBDEVZ.js";
+import {
+  BoundingSphere_default
+} from "./chunk-KSUW52CB.js";
+import {
+  Rectangle_default
+} from "./chunk-EEPIX3G6.js";
+import {
+  ComponentDatatype_default
+} from "./chunk-6MZLBHE3.js";
+import {
+  Cartesian3_default,
+  Cartographic_default,
+  Ellipsoid_default,
+  Frozen_default
+} from "./chunk-ONGM4NH7.js";
+import {
+  Math_default
+} from "./chunk-D3QW2ZBO.js";
+import "./chunk-XW26DLRH.js";
+import "./chunk-LVZNZ4UK.js";
+import {
+  DeveloperError_default
+} from "./chunk-77GQGTAP.js";
+import {
+  defined_default
+} from "./chunk-WCY5IZWR.js";
+
+// packages/engine/Source/Core/RectangleOutlineGeometry.js
+var bottomBoundingSphere = new BoundingSphere_default();
+var topBoundingSphere = new BoundingSphere_default();
+var positionScratch = new Cartesian3_default();
+var rectangleScratch = new Rectangle_default();
+function constructRectangle(geometry, computedOptions) {
+  const ellipsoid = geometry._ellipsoid;
+  const height = computedOptions.height;
+  const width = computedOptions.width;
+  const northCap = computedOptions.northCap;
+  const southCap = computedOptions.southCap;
+  let rowHeight = height;
+  let widthMultiplier = 2;
+  let size = 0;
+  let corners = 4;
+  if (northCap) {
+    widthMultiplier -= 1;
+    rowHeight -= 1;
+    size += 1;
+    corners -= 2;
+  }
+  if (southCap) {
+    widthMultiplier -= 1;
+    rowHeight -= 1;
+    size += 1;
+    corners -= 2;
+  }
+  size += widthMultiplier * width + 2 * rowHeight - corners;
+  const positions = new Float64Array(size * 3);
+  let posIndex = 0;
+  let row = 0;
+  let col;
+  const position = positionScratch;
+  if (northCap) {
+    RectangleGeometryLibrary_default.computePosition(
+      computedOptions,
+      ellipsoid,
+      false,
+      row,
+      0,
+      position
+    );
+    positions[posIndex++] = position.x;
+    positions[posIndex++] = position.y;
+    positions[posIndex++] = position.z;
+  } else {
+    for (col = 0; col < width; col++) {
+      RectangleGeometryLibrary_default.computePosition(
+        computedOptions,
+        ellipsoid,
+        false,
+        row,
+        col,
+        position
+      );
+      positions[posIndex++] = position.x;
+      positions[posIndex++] = position.y;
+      positions[posIndex++] = position.z;
+    }
+  }
+  col = width - 1;
+  for (row = 1; row < height; row++) {
+    RectangleGeometryLibrary_default.computePosition(
+      computedOptions,
+      ellipsoid,
+      false,
+      row,
+      col,
+      position
+    );
+    positions[posIndex++] = position.x;
+    positions[posIndex++] = position.y;
+    positions[posIndex++] = position.z;
+  }
+  row = height - 1;
+  if (!southCap) {
+    for (col = width - 2; col >= 0; col--) {
+      RectangleGeometryLibrary_default.computePosition(
+        computedOptions,
+        ellipsoid,
+        false,
+        row,
+        col,
+        position
+      );
+      positions[posIndex++] = position.x;
+      positions[posIndex++] = position.y;
+      positions[posIndex++] = position.z;
+    }
+  }
+  col = 0;
+  for (row = height - 2; row > 0; row--) {
+    RectangleGeometryLibrary_default.computePosition(
+      computedOptions,
+      ellipsoid,
+      false,
+      row,
+      col,
+      position
+    );
+    positions[posIndex++] = position.x;
+    positions[posIndex++] = position.y;
+    positions[posIndex++] = position.z;
+  }
+  const indicesSize = positions.length / 3 * 2;
+  const indices = IndexDatatype_default.createTypedArray(
+    positions.length / 3,
+    indicesSize
+  );
+  let index = 0;
+  for (let i = 0; i < positions.length / 3 - 1; i++) {
+    indices[index++] = i;
+    indices[index++] = i + 1;
+  }
+  indices[index++] = positions.length / 3 - 1;
+  indices[index++] = 0;
+  const geo = new Geometry_default({
+    attributes: new GeometryAttributes_default(),
+    primitiveType: PrimitiveType_default.LINES
+  });
+  geo.attributes.position = new GeometryAttribute_default({
+    componentDatatype: ComponentDatatype_default.DOUBLE,
+    componentsPerAttribute: 3,
+    values: positions
+  });
+  geo.indices = indices;
+  return geo;
+}
+function constructExtrudedRectangle(rectangleGeometry, computedOptions) {
+  const maxHeight = rectangleGeometry._surfaceHeight;
+  const minHeight = rectangleGeometry._extrudedHeight;
+  const ellipsoid = rectangleGeometry._ellipsoid;
+  const geo = constructRectangle(rectangleGeometry, computedOptions);
+  const height = computedOptions.height;
+  const width = computedOptions.width;
+  const topPositions = PolygonPipeline_default.scaleToGeodeticHeight(
+    geo.attributes.position.values,
+    maxHeight,
+    ellipsoid,
+    false
+  );
+  let length = topPositions.length;
+  const positions = new Float64Array(length * 2);
+  positions.set(topPositions);
+  const bottomPositions = PolygonPipeline_default.scaleToGeodeticHeight(
+    geo.attributes.position.values,
+    minHeight,
+    ellipsoid
+  );
+  positions.set(bottomPositions, length);
+  geo.attributes.position.values = positions;
+  const northCap = computedOptions.northCap;
+  const southCap = computedOptions.southCap;
+  let corners = 4;
+  if (northCap) {
+    corners -= 1;
+  }
+  if (southCap) {
+    corners -= 1;
+  }
+  const indicesSize = (positions.length / 3 + corners) * 2;
+  const indices = IndexDatatype_default.createTypedArray(
+    positions.length / 3,
+    indicesSize
+  );
+  length = positions.length / 6;
+  let index = 0;
+  for (let i = 0; i < length - 1; i++) {
+    indices[index++] = i;
+    indices[index++] = i + 1;
+    indices[index++] = i + length;
+    indices[index++] = i + length + 1;
+  }
+  indices[index++] = length - 1;
+  indices[index++] = 0;
+  indices[index++] = length + length - 1;
+  indices[index++] = length;
+  indices[index++] = 0;
+  indices[index++] = length;
+  let bottomCorner;
+  if (northCap) {
+    bottomCorner = height - 1;
+  } else {
+    const topRightCorner = width - 1;
+    indices[index++] = topRightCorner;
+    indices[index++] = topRightCorner + length;
+    bottomCorner = width + height - 2;
+  }
+  indices[index++] = bottomCorner;
+  indices[index++] = bottomCorner + length;
+  if (!southCap) {
+    const bottomLeftCorner = width + bottomCorner - 1;
+    indices[index++] = bottomLeftCorner;
+    indices[index] = bottomLeftCorner + length;
+  }
+  geo.indices = indices;
+  return geo;
+}
+function RectangleOutlineGeometry(options) {
+  options = options ?? Frozen_default.EMPTY_OBJECT;
+  const rectangle = options.rectangle;
+  const granularity = options.granularity ?? Math_default.RADIANS_PER_DEGREE;
+  const ellipsoid = options.ellipsoid ?? Ellipsoid_default.default;
+  const rotation = options.rotation ?? 0;
+  if (!defined_default(rectangle)) {
+    throw new DeveloperError_default("rectangle is required.");
+  }
+  Rectangle_default._validate(rectangle);
+  if (rectangle.north < rectangle.south) {
+    throw new DeveloperError_default(
+      "options.rectangle.north must be greater than options.rectangle.south"
+    );
+  }
+  const height = options.height ?? 0;
+  const extrudedHeight = options.extrudedHeight ?? height;
+  this._rectangle = Rectangle_default.clone(rectangle);
+  this._granularity = granularity;
+  this._ellipsoid = ellipsoid;
+  this._surfaceHeight = Math.max(height, extrudedHeight);
+  this._rotation = rotation;
+  this._extrudedHeight = Math.min(height, extrudedHeight);
+  this._offsetAttribute = options.offsetAttribute;
+  this._workerName = "createRectangleOutlineGeometry";
+}
+RectangleOutlineGeometry.packedLength = Rectangle_default.packedLength + Ellipsoid_default.packedLength + 5;
+RectangleOutlineGeometry.pack = function(value, array, startingIndex) {
+  if (!defined_default(value)) {
+    throw new DeveloperError_default("value is required");
+  }
+  if (!defined_default(array)) {
+    throw new DeveloperError_default("array is required");
+  }
+  startingIndex = startingIndex ?? 0;
+  Rectangle_default.pack(value._rectangle, array, startingIndex);
+  startingIndex += Rectangle_default.packedLength;
+  Ellipsoid_default.pack(value._ellipsoid, array, startingIndex);
+  startingIndex += Ellipsoid_default.packedLength;
+  array[startingIndex++] = value._granularity;
+  array[startingIndex++] = value._surfaceHeight;
+  array[startingIndex++] = value._rotation;
+  array[startingIndex++] = value._extrudedHeight;
+  array[startingIndex] = value._offsetAttribute ?? -1;
+  return array;
+};
+var scratchRectangle = new Rectangle_default();
+var scratchEllipsoid = Ellipsoid_default.clone(Ellipsoid_default.UNIT_SPHERE);
+var scratchOptions = {
+  rectangle: scratchRectangle,
+  ellipsoid: scratchEllipsoid,
+  granularity: void 0,
+  height: void 0,
+  rotation: void 0,
+  extrudedHeight: void 0,
+  offsetAttribute: void 0
+};
+RectangleOutlineGeometry.unpack = function(array, startingIndex, result) {
+  if (!defined_default(array)) {
+    throw new DeveloperError_default("array is required");
+  }
+  startingIndex = startingIndex ?? 0;
+  const rectangle = Rectangle_default.unpack(array, startingIndex, scratchRectangle);
+  startingIndex += Rectangle_default.packedLength;
+  const ellipsoid = Ellipsoid_default.unpack(array, startingIndex, scratchEllipsoid);
+  startingIndex += Ellipsoid_default.packedLength;
+  const granularity = array[startingIndex++];
+  const height = array[startingIndex++];
+  const rotation = array[startingIndex++];
+  const extrudedHeight = array[startingIndex++];
+  const offsetAttribute = array[startingIndex];
+  if (!defined_default(result)) {
+    scratchOptions.granularity = granularity;
+    scratchOptions.height = height;
+    scratchOptions.rotation = rotation;
+    scratchOptions.extrudedHeight = extrudedHeight;
+    scratchOptions.offsetAttribute = offsetAttribute === -1 ? void 0 : offsetAttribute;
+    return new RectangleOutlineGeometry(scratchOptions);
+  }
+  result._rectangle = Rectangle_default.clone(rectangle, result._rectangle);
+  result._ellipsoid = Ellipsoid_default.clone(ellipsoid, result._ellipsoid);
+  result._surfaceHeight = height;
+  result._rotation = rotation;
+  result._extrudedHeight = extrudedHeight;
+  result._offsetAttribute = offsetAttribute === -1 ? void 0 : offsetAttribute;
+  return result;
+};
+var nwScratch = new Cartographic_default();
+RectangleOutlineGeometry.createGeometry = function(rectangleGeometry) {
+  const rectangle = rectangleGeometry._rectangle;
+  const ellipsoid = rectangleGeometry._ellipsoid;
+  const computedOptions = RectangleGeometryLibrary_default.computeOptions(
+    rectangle,
+    rectangleGeometry._granularity,
+    rectangleGeometry._rotation,
+    0,
+    rectangleScratch,
+    nwScratch
+  );
+  let geometry;
+  let boundingSphere;
+  if (Math_default.equalsEpsilon(
+    rectangle.north,
+    rectangle.south,
+    Math_default.EPSILON10
+  ) || Math_default.equalsEpsilon(
+    rectangle.east,
+    rectangle.west,
+    Math_default.EPSILON10
+  )) {
+    return void 0;
+  }
+  const surfaceHeight = rectangleGeometry._surfaceHeight;
+  const extrudedHeight = rectangleGeometry._extrudedHeight;
+  const extrude = !Math_default.equalsEpsilon(
+    surfaceHeight,
+    extrudedHeight,
+    0,
+    Math_default.EPSILON2
+  );
+  let offsetValue;
+  if (extrude) {
+    geometry = constructExtrudedRectangle(rectangleGeometry, computedOptions);
+    if (defined_default(rectangleGeometry._offsetAttribute)) {
+      const size = geometry.attributes.position.values.length / 3;
+      let offsetAttribute = new Uint8Array(size);
+      if (rectangleGeometry._offsetAttribute === GeometryOffsetAttribute_default.TOP) {
+        offsetAttribute = offsetAttribute.fill(1, 0, size / 2);
+      } else {
+        offsetValue = rectangleGeometry._offsetAttribute === GeometryOffsetAttribute_default.NONE ? 0 : 1;
+        offsetAttribute = offsetAttribute.fill(offsetValue);
+      }
+      geometry.attributes.applyOffset = new GeometryAttribute_default({
+        componentDatatype: ComponentDatatype_default.UNSIGNED_BYTE,
+        componentsPerAttribute: 1,
+        values: offsetAttribute
+      });
+    }
+    const topBS = BoundingSphere_default.fromRectangle3D(
+      rectangle,
+      ellipsoid,
+      surfaceHeight,
+      topBoundingSphere
+    );
+    const bottomBS = BoundingSphere_default.fromRectangle3D(
+      rectangle,
+      ellipsoid,
+      extrudedHeight,
+      bottomBoundingSphere
+    );
+    boundingSphere = BoundingSphere_default.union(topBS, bottomBS);
+  } else {
+    geometry = constructRectangle(rectangleGeometry, computedOptions);
+    geometry.attributes.position.values = PolygonPipeline_default.scaleToGeodeticHeight(
+      geometry.attributes.position.values,
+      surfaceHeight,
+      ellipsoid,
+      false
+    );
+    if (defined_default(rectangleGeometry._offsetAttribute)) {
+      const length = geometry.attributes.position.values.length;
+      offsetValue = rectangleGeometry._offsetAttribute === GeometryOffsetAttribute_default.NONE ? 0 : 1;
+      const applyOffset = new Uint8Array(length / 3).fill(offsetValue);
+      geometry.attributes.applyOffset = new GeometryAttribute_default({
+        componentDatatype: ComponentDatatype_default.UNSIGNED_BYTE,
+        componentsPerAttribute: 1,
+        values: applyOffset
+      });
+    }
+    boundingSphere = BoundingSphere_default.fromRectangle3D(
+      rectangle,
+      ellipsoid,
+      surfaceHeight
+    );
+  }
+  return new Geometry_default({
+    attributes: geometry.attributes,
+    indices: geometry.indices,
+    primitiveType: PrimitiveType_default.LINES,
+    boundingSphere,
+    offsetAttribute: rectangleGeometry._offsetAttribute
+  });
+};
+var RectangleOutlineGeometry_default = RectangleOutlineGeometry;
+
+// packages/engine/Source/Workers/createRectangleOutlineGeometry.js
+function createRectangleOutlineGeometry(rectangleGeometry, offset) {
+  if (defined_default(offset)) {
+    rectangleGeometry = RectangleOutlineGeometry_default.unpack(
+      rectangleGeometry,
+      offset
+    );
+  }
+  rectangleGeometry._ellipsoid = Ellipsoid_default.clone(rectangleGeometry._ellipsoid);
+  rectangleGeometry._rectangle = Rectangle_default.clone(rectangleGeometry._rectangle);
+  return RectangleOutlineGeometry_default.createGeometry(rectangleGeometry);
+}
+var createRectangleOutlineGeometry_default = createRectangleOutlineGeometry;
+export {
+  createRectangleOutlineGeometry_default as default
+};
