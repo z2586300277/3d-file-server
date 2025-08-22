@@ -5,137 +5,573 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D File Server</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-            font-size: 14px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a1a;
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
         }
-        h1, h2 {
-            color: #333;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            color: #ffffff;
         }
-        th, td {
-            border: 1px solid #ddd;
-            text-align: left;
+        
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
         }
-        th {
-            background-color: #f4f4f4;
-        }
-        a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        button {
-            border: none;
-            color: 007BFF;
+        
+        .category-btn {
+            background: #2d2d2d;
+            border: 1px solid #404040;
+            color: #fff;
+            padding: 8px 16px;
+            border-radius: 20px;
             cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        
+        .category-btn:hover,
+        .category-btn.active {
+            background: #404040;
+            border-color: #555555;
+            transform: translateY(-2px);
+        }
+        
+        .category-section {
+            margin-bottom: 40px;
+        }
+        
+        .category-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid #666666;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .file-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+            padding: 10px 0;
+        }
+        
+        .file-card {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 8px 8px 4px 8px;
+            border: 1px solid #404040;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .file-card:hover {
+
+        }
+        
+        .file-preview {
+            width: 100%;
+            height: 72px;
+            border-radius: 4px;
+            margin-bottom: 6px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .file-preview img,
+        .file-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 4px;
         }
-
+        
+        .file-preview .icon {
+            font-size: 1.2rem;
+            opacity: 0.7;
+        }
+        
+        .file-name {
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 3px;
+            text-align: center;
+            word-wrap: break-word;
+            line-height: 1.1;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex-grow: 1;
+        }
+        
+        .file-type {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            text-align: center;
+            margin-bottom: 0;
+            cursor: pointer;
+            padding: 1px 4px;
+            transition: all 0.3s ease;
+            text-decoration: underline;
+        }
+        
+        .file-type:hover {
+            color: #42a5f5;
+        }
+        
+        .copy-indicator {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(76, 175, 80, 0.9);
+            padding: 1px 4px;
+            border-radius: 8px;
+            font-size: 0.55rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .copy-indicator.show {
+            opacity: 1;
+        }
+        
+        .toast {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border: 1px solid #404040;
+        }
+        
+        .toast.show {
+            opacity: 1;
+        }
+        
+        .file-extension {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 1px 3px;
+            border-radius: 2px;
+            font-size: 0.45rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .category-count {
+            background: #404040;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+        
+        @media (max-width: 768px) {
+            .file-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 20px;
+            }
+            
+            .category-nav {
+                margin-bottom: 20px;
+            }
+            
+            .file-preview {
+                height: 40px;
+            }
+            
+            .file-name {
+                font-size: 0.65rem;
+            }
+            
+            .file-card {
+                padding: 6px;
+                min-height: 85px;
+            }
+        }
     </style>
 </head>
 <body>
-    <table>
-        <thead>
-            <tr>
-                <th>文件名称</th>
-                <th>链接</th>
-                <th>地址</th>
-            </tr>
-        </thead>
-        <tbody id="file-list"></tbody>
-    </table>
+    <div class="container">
+        <div class="category-nav" id="category-nav">
+            <button class="category-btn active" data-category="all">全部</button>
+        </div>
+        
+        <div id="file-categories"></div>
+    </div>
 
     <script>
         const files = [
-            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/house/tileset.json", name: "3dtiles 房子" },
-            { url: "https://z2586300277.github.io/3d-file-server/images/channels/n.png", name: "贴图" },
+
+            { url: "https://z2586300277.github.io/3d-file-server/images/elegant.jpg", name: "微信" },
+            { url: "https://z2586300277.github.io/3d-file-server/images/nico.jpg", name: "nico微信" },
+            { url: "https://z2586300277.github.io/3d-file-server/images/QQ.png", name: "QQ群" },
+            { url: "https://z2586300277.github.io/3d-file-server/images/wx_star.png", name: "赞赏码" },
+
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/n.png", name: "贴图" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/fgjb.png", name: "贴图" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/black.png", name: "网格地板" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/star1.png", name: "星" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/star2.png", name: "星" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/snow.png", name: "雪" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/flowLight.png", name: "流光" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/channels/wangge.webp", name: "网格" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/dissolve/dissolveTex.png", name: "溶解" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/drei/normal.jpg", name: "法线" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/texture/waternormals.jpg", name: "法线" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/drei/roughness.jpg", name: "粗糙" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/texture/noise.png", name: "噪声" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/shader/smokeMap.png", name: "烟雾" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/map/cloud.png", name: "云" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/map/diban.jpg", name: "地板" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/map/earth_clouds.png", name: "地球云层" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/map/hex.png", name: "六边形" },
+             { url: "https://z2586300277.github.io/3d-file-server/images/map/smokeparticle.png", name: "烟雾" },
+
+           
+            { url: "https://z2586300277.github.io/3d-file-server/files/model/elegant.glb", name: "优雅永不过时" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/model/LittlestTokyo.glb", name: "小东京" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/model/Soldier.glb", name: "士兵" },
             { url: "https://z2586300277.github.io/3d-file-server/files/model/Fox.glb", name: "狐狸" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/model/house/house.obj", name: "房子" },
             { url: "https://z2586300277.github.io/3d-file-server/models/glb/computer.glb", name: "电脑" },
-            { url: "https://z2586300277.github.io/3d-file-server/examples/coffeeMug/coffeeMug.glb", name: "咖啡模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/fbx/shanghai.FBX", name: "城市白膜" },
+            { url: "https://z2586300277.github.io/3d-file-server/examples/coffeeMug/coffeeMug.glb", name: "咖啡" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/fbx/shanghai.FBX", name: "上海城市白膜" },
             { url: "https://z2586300277.github.io/3d-file-server/files/hdr/1k.hdr", name: "hdr 贴图" },
             { url: "https://z2586300277.github.io/3d-file-server/files/sky/skyBox0/1.png", name: "天空盒" },
             { url: "https://z2586300277.github.io/3d-file-server/files/video/video.mp4", name: "视频" },
+            { url: "https://z2586300277.github.io/3d-file-server/video/test.mp4", name: "海洋" },
+            { url: "https://z2586300277.github.io/3d-file-server/video/vr.mp4", name: "vr全景视频" },
             { url: "https://z2586300277.github.io/3d-file-server/files/audio/Avicii-WeBurn.mp3", name: "音乐" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/audio/YMCA.mp3", name: "YMCA" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/china.json", name: "中国 geo json" },
+            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/house/tileset.json", name: "3dtiles 房子" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/chinaBound.json", name: "中国边界 geo json" },
+            { url: "https://z2586300277.github.io/3d-file-server/files/json/jiaotong.json", name: "交通  json" },
             { url: "https://z2586300277.github.io/3d-file-server/files/json/font.json", name: "字体 json 英文" },
             { url: "https://z2586300277.github.io/3d-file-server/files/json/font_zn.json", name: "字体 json 中文" },
             { url: "https://z2586300277.github.io/3d-file-server/files/json/guangdong.json", name: "广东 geo json" },
-            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/test/tileset.json", name: "测试瓦片模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}.jpg", name: "离线地图资源" },
+            { url: "https://z2586300277.github.io/3d-file-server/3dtiles/test/tileset.json", name: "测试瓦片" },
+            { url: "https://z2586300277.github.io/3d-file-server/map/[Baidu-Gaode]/tiles/{z}/{x}/{y}", name: "离线地图资源" },
             { url: "https://z2586300277.github.io/3d-file-server/threeExamples/application/flyLine/earth.jpeg", name: "地球贴图" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/build.glb", name: "建筑模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb", name: "导弹模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb", name: "飞机模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb", name: "地面模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb", name: "工人模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/leida.glb", name: "雷达模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/plane.glb", name: "飞机模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/robot.glb", name: "机器人模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb", name: "挖掘机模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb", name: "展馆模型" },
-            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb", name: "追踪器模型" }
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/build.glb", name: "建筑" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/build2.glb", name: "建筑2" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/build3.glb", name: "建筑3" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/daodan.glb", name: "导弹" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/feiji.glb", name: "飞机" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/foorGround.glb", name: "地面" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/gongren.glb", name: "工人" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/ship.glb", name: "船" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/gamemap.glb", name: "游戏地图" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/leida.glb", name: "雷达" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/plane.glb", name: "飞机" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/robot.glb", name: "机器人" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/wajueji.glb", name: "挖掘机" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhanguan.glb", name: "展馆" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/map_park.glb", name: "公园" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/zhuizi.glb", name: "锥子" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/monkey.glb", name: "猴子" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/glb/plant.glb", name: "植物" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/yuanlin.glb", name: "园林" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/whitebuild.glb", name: "白模" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/uav.glb", name: "无人机" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/sushe.glb", name: "宿舍" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/shop.glb", name: "商区" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/modern_city.glb", name: "现代城市" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/levelBuild.glb", name: "楼层" },
+            { url: "https://z2586300277.github.io/3d-file-server/models/konglong.fbx", name: "恐龙" },
+
+
         ];
 
-        const fileList = document.getElementById('file-list');
+        function getFileExtension(url) {
+            return url.split('.').pop().toLowerCase();
+        }
 
-        files.forEach(file => {
-            const row = document.createElement('tr');
+        function getFileType(extension) {
+            const imageExts = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'];
+            const videoExts = ['mp4', 'webm', 'avi', 'mov'];
+            const audioExts = ['mp3', 'wav', 'ogg'];
+            const modelExts = ['glb', 'gltf', 'fbx', 'obj'];
+            const dataExts = ['json', 'hdr'];
 
-            const nameCell = document.createElement('td');
-            nameCell.textContent = file.name;
+            if (imageExts.includes(extension)) return 'image';
+            if (videoExts.includes(extension)) return 'video';
+            if (audioExts.includes(extension)) return 'audio';
+            if (modelExts.includes(extension)) return 'model';
+            if (dataExts.includes(extension)) return 'data';
+            return 'file';
+        }
 
-            const linkCell = document.createElement('td');
-            const link = document.createElement('a');
-            link.href = file.url;
-            link.textContent = file.url;
-            link.target = '_blank';
-            linkCell.appendChild(link);
-
-            const actionCell = document.createElement('td');
-            const copyButton = document.createElement('button');
-            copyButton.textContent = '复制链接';
-            copyButton.onclick = () => {
-                navigator.clipboard.writeText(file.url).then(() => {
-                    // 弹出两秒后消失
-                    const tip = document.createElement('div');
-                    //设置样式
-                    tip.style.cssText = `
-                        position: fixed;
-                        top: 50%;
-                        left: 50%;
-                        transform: translate(-50%, -50%);
-                        padding: 10px 20px;
-                        background-color: rgba(0, 0, 0, 0.8);
-                        color: #fff;
-                        border-radius: 4px;
-                        font-size: 14px;
-                    `
-                    tip.style.zIndex = 9999;    
-
-                    tip.textContent = '已复制';
-                    document.body.appendChild(tip);
-                    setTimeout(() => {
-                        document.body.removeChild(tip);
-                    }, 400);
-                });
+        function getFileIcon(type) {
+            const icons = {
+                image: '🖼️',
+                video: '🎬',
+                audio: '🎵',
+                model: '🎮',
+                data: '📊',
+                file: '📄'
             };
-            actionCell.appendChild(copyButton);
+            return icons[type] || '📄';
+        }
 
-            row.appendChild(nameCell);
-            row.appendChild(actionCell);
-            row.appendChild(linkCell);
+        function getCategoryName(type) {
+            const names = {
+                image: '图像文件',
+                video: '视频文件',
+                audio: '音频文件',
+                model: '3D',
+                data: '数据文件',
+                file: '其他文件'
+            };
+            return names[type] || '其他文件';
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('链接已复制到剪贴板！');
+            }).catch(() => {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showToast('链接已复制到剪贴板！');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.textContent = message;
+            document.body.appendChild(toast);
             
-            fileList.appendChild(row);
-        });
+            setTimeout(() => toast.classList.add('show'), 100);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => document.body.removeChild(toast), 300);
+            }, 2000);
+        }
+
+        function accessFile(url) {
+            window.open(url, '_blank');
+            showToast('正在访问文件...');
+        }
+
+        function createFileCard(file) {
+            const extension = getFileExtension(file.url);
+            const type = getFileType(extension);
+            const icon = getFileIcon(type);
+
+            const card = document.createElement('div');
+            card.className = 'file-card';
+            
+            const preview = document.createElement('div');
+            preview.className = 'file-preview';
+            
+            const extensionTag = document.createElement('div');
+            extensionTag.className = 'file-extension';
+            extensionTag.textContent = extension;
+            
+            const copyIndicator = document.createElement('div');
+            copyIndicator.className = 'copy-indicator';
+            copyIndicator.textContent = '已复制';
+            
+            const accessIndicator = document.createElement('div');
+            accessIndicator.className = 'access-indicator';
+
+            if (type === 'image') {
+                const img = document.createElement('img');
+                img.src = file.url;
+                img.alt = file.name;
+                img.onerror = () => {
+                    preview.innerHTML = `<span class="icon">${icon}</span>`;
+                };
+                preview.appendChild(img);
+            } else if (type === 'video') {
+                const video = document.createElement('video');
+                video.src = file.url;
+                video.muted = true;
+                video.loop = true;
+                video.onerror = () => {
+                    preview.innerHTML = `<span class="icon">${icon}</span>`;
+                };
+                preview.appendChild(video);
+                
+                card.addEventListener('mouseenter', () => {
+                    video.play().catch(() => {});
+                });
+                card.addEventListener('mouseleave', () => {
+                    video.pause();
+                });
+            } else {
+                preview.innerHTML = `<span class="icon">${icon}</span>`;
+            }
+
+            const fileName = document.createElement('div');
+            fileName.className = 'file-name';
+            fileName.textContent = file.name;
+
+            const fileTypeDiv = document.createElement('div');
+            fileTypeDiv.className = 'file-type';
+            fileTypeDiv.textContent = '直接打开'
+
+            card.appendChild(preview);
+            card.appendChild(extensionTag);
+            card.appendChild(copyIndicator);
+            card.appendChild(accessIndicator);
+            card.appendChild(fileName);
+            card.appendChild(fileTypeDiv);
+
+            // 文件类型点击访问文件
+            fileTypeDiv.addEventListener('click', (e) => {
+                e.stopPropagation();
+                accessFile(file.url);
+                accessIndicator.classList.add('show');
+                setTimeout(() => accessIndicator.classList.remove('show'), 1500);
+            });
+
+            // 卡片其他区域点击复制链接
+            card.addEventListener('click', () => {
+                copyToClipboard(file.url);
+                copyIndicator.classList.add('show');
+                setTimeout(() => copyIndicator.classList.remove('show'), 1500);
+            });
+
+            return card;
+        }
+
+        function groupFilesByCategory() {
+            const categories = {};
+            files.forEach(file => {
+                const extension = getFileExtension(file.url);
+                const type = getFileType(extension);
+                if (!categories[type]) {
+                    categories[type] = [];
+                }
+                categories[type].push(file);
+            });
+            return categories;
+        }
+
+        function renderCategories(categoriesToShow = null) {
+            const categoriesContainer = document.getElementById('file-categories');
+            categoriesContainer.innerHTML = '';
+            
+            const categories = groupFilesByCategory();
+            
+            Object.keys(categories).forEach(type => {
+                if (categoriesToShow && !categoriesToShow.includes(type)) return;
+                
+                const section = document.createElement('div');
+                section.className = 'category-section';
+                section.id = `category-${type}`;
+                
+                const title = document.createElement('div');
+                title.className = 'category-title';
+                title.innerHTML = `
+                    <span>${getFileIcon(type)}</span>
+                    <span>${getCategoryName(type)}</span>
+                    <span class="category-count">${categories[type].length}</span>
+                `;
+                
+                const grid = document.createElement('div');
+                grid.className = 'file-grid';
+                
+                categories[type].forEach(file => {
+                    const card = createFileCard(file);
+                    grid.appendChild(card);
+                });
+                
+                section.appendChild(title);
+                section.appendChild(grid);
+                categoriesContainer.appendChild(section);
+            });
+        }
+
+        function initCategoryNavigation() {
+            const nav = document.getElementById('category-nav');
+            const categories = groupFilesByCategory();
+            
+            // 添加分类按钮
+            Object.keys(categories).forEach(type => {
+                const btn = document.createElement('button');
+                btn.className = 'category-btn';
+                btn.textContent = `${getFileIcon(type)} ${getCategoryName(type)} (${categories[type].length})`;
+                btn.dataset.category = type;
+                nav.appendChild(btn);
+            });
+            
+            // 添加事件监听
+            nav.addEventListener('click', (e) => {
+                if (e.target.classList.contains('category-btn')) {
+                    const category = e.target.dataset.category;
+                    
+                    // 更新按钮状态
+                    nav.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
+                    e.target.classList.add('active');
+                    
+                    // 渲染对应分类
+                    if (category === 'all') {
+                        renderCategories();
+                    } else {
+                        renderCategories([category]);
+                    }
+                }
+            });
+        }
+
+        // 初始化页面
+        initCategoryNavigation();
+        renderCategories();
     </script>
 </body>
 </html>
